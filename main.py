@@ -191,4 +191,4 @@ if __name__ == '__main__':
             sys.version_info[0], sys.version_info[1]))
         exit()
 
-    main(input_path, output_path)
+    main(input_path, output_path, lang)
