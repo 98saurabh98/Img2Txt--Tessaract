@@ -156,7 +156,7 @@ def main(input_path, output_path, lang):
 
     else:
         filename = os.path.basename(input_path)
-        run_tesseract(filename, output_path, filename)
+        run_tesseract(filename, output_path, filename, lang)
 
 
 if __name__ == '__main__':
@@ -180,6 +180,10 @@ if __name__ == '__main__':
         output_path = os.path.abspath(args.output_dir)
     else:
         output_path = None
+    if args.lang:
+        lang = args.lang
+    else:
+        lang = "eng"
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
     else:
