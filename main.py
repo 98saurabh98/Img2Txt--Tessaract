@@ -39,7 +39,7 @@ def get_command():
     return DEFAULT_CHECK_COMMAND
 
 
-def run_tesseract(filename, output_path, image_file_name, lang):
+def run_tesseract(filename, output_path, image_file_name, l):
     # Run tesseract
     filename_without_extension = os.path.splitext(filename)[0]
     #If no output path is provided
@@ -54,7 +54,7 @@ def run_tesseract(filename, output_path, image_file_name, lang):
         shutil.rmtree(temp_dir)
         return text
     text_file_path = os.path.join(output_path, filename_without_extension)
-    subprocess.run(['tesseract', image_file_name, text_file_path, lang],
+    subprocess.run(['tesseract', image_file_name, text_file_path, l],
                    stdout=subprocess.PIPE,
                    stderr=subprocess.PIPE)
     return
@@ -104,7 +104,7 @@ def check_pre_requisites_tesseract():
         return True
 
 
-def main(input_path, output_path, lang):
+def main(input_path, output_path, l):
     # Check if tesseract is installed or not
     if not check_pre_requisites_tesseract():
         return
@@ -140,7 +140,7 @@ def main(input_path, output_path, lang):
                 continue
 
             image_file_name = os.path.join(input_path, filename)
-            print(run_tesseract(filename, output_path, image_file_name, lang))
+            print(run_tesseract(filename, output_path, image_file_name, l))
             successful_files += 1
 
         logging.info("Parsing Completed!\n")
@@ -156,14 +156,14 @@ def main(input_path, output_path, lang):
 
     else:
         filename = os.path.basename(input_path)
-        run_tesseract(filename, output_path, filename, lang)
+        run_tesseract(filename, output_path, filename, l)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_dir', help="Input directory where input images are stored")
     parser.add_argument('--input_file', help="Input image filepath")
-    parser.add_argument('--lang', help="(Optional)language you want to OCR")
+    parser.add_argument('--l', help="(Optional)language you want to OCR")
     parser.add_argument('--output_dir', help="(Optional) Output directory for converted text")
     parser.add_argument('--debug', action='store_true', help="Enable verbose DEBUG logging")
 
@@ -180,10 +180,10 @@ if __name__ == '__main__':
         output_path = os.path.abspath(args.output_dir)
     else:
         output_path = None
-    if args.lang:
-        lang = args.lang
+    if args.l:
+        l = args.l
     else:
-        lang = "eng"
+        l = "eng"
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
     else:
@@ -195,4 +195,4 @@ if __name__ == '__main__':
             sys.version_info[0], sys.version_info[1]))
         exit()
 
-    main(input_path, output_path, lang)
+    main(input_path, output_path, l)
