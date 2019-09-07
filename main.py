@@ -56,7 +56,6 @@ def run_tesseract(filename, output_path, image_file_name, lang):
     text_file_path = os.path.join(output_path, filename_without_extension)
     subprocess.run(['tesseract', image_file_name, text_file_path, lang],
                    stdout=subprocess.PIPE,
-                   stderr=subprocess.PIPE,
                    stderr=subprocess.PIPE)
     return
 
