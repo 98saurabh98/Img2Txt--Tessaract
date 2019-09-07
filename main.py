@@ -180,10 +180,6 @@ if __name__ == '__main__':
         output_path = os.path.abspath(args.output_dir)
     else:
         output_path = None
-    if args.lang:
-        lang = lang
-    else:
-        lang = "eng"
     if args.debug:
         logging.getLogger().setLevel(logging.DEBUG)
     else:
